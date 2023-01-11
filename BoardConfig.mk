@@ -174,6 +174,9 @@ PRC_COMPATIBILITY_PACKAGE := true
 ZIP_OPTIMIZATION_NO_INTEGRITY := true
 
 DEVICE_MANIFEST_FILE := device/generic/common/manifest.xml
+ifneq ($(TARGET_SUPPORTS_32_BIT_APPS),false)
+DEVICE_MANIFEST_FILE += device/generic/common/manifest_omx.xml
+endif
 
 #BOARD_SEPOLICY_DIRS += device/generic/common/sepolicy/nonplat \
 #                       system/bt/vendor_libs/linux/sepolicy \
