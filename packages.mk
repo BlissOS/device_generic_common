@@ -96,7 +96,6 @@ PRODUCT_PACKAGES += \
 # Third party apps
 PRODUCT_PACKAGES += \
     Eleven \
-    TSCalibration2 \
     native_bridge_stub_library_defaults \
     libnativebridge-headers \
     libnativeloader-headers \
