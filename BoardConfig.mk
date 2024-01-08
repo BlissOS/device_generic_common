@@ -185,9 +185,9 @@ endif
 #                       vendor/intel/proprietary/houdini/sepolicy \
 #                       vendor/google/proprietary/widevine-prebuilt/sepolicy
 #
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/generic/common/sepolicy/plat_private
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS := device/generic/common/sepolicy/plat_private
 
-BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+TARGET_FLATTEN_APEX := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 4294967290
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 BOARD_USES_OEMIMAGE := true
