@@ -55,13 +55,6 @@ function init_misc()
 		fi
 	fi
 
-	##WIP: Enable USB as device support
-    modprobe roles
-    modprobe xhci-hcd
-    modprobe xhci-pci
-    modprobe dwc3
-    modprobe dwc3-pci
-
 	#Set CPU name into a property
 	setprop ro.bliss.cpuname "$(grep "model name" /proc/cpuinfo | sort -u | cut -d : -f 2 | cut -c2-)"
 }
@@ -421,7 +414,6 @@ function init_hal_media()
 	else
 	    set_property media.sf.omx-plugin ""
     	set_property media.sf.extractor-plugin ""
-	    set_property debug.ffmpeg-omx.disable 1
 	fi
 
 ## Enable logging
@@ -472,7 +464,7 @@ function init_hal_vulkan()
 			fi
 			;;
 		*amdgpu)
-			set_property ro.hardware.vulkan radeon
+			set_property ro.hardware.vulkan amd
 			;;
 		*virtio_gpu)
 			set_property ro.hardware.vulkan virtio
