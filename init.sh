@@ -57,6 +57,8 @@ function init_misc()
 	# Set cpu scaling at boot (ie set pstate status to active/passive at boot)
 	if [ -n "$INTEL_PSTATE_STATUS"  ]; then
 		echo $INTEL_PSTATE_STATUS > /sys/devices/system/cpu/intel_pstate/status
+	else
+		echo passive > /sys/devices/system/cpu/intel_pstate/status
 	fi
 
 	# enable sdcardfs if /data is not mounted on tmpfs or 9p
@@ -566,11 +568,35 @@ function init_hal_power()
 		e-tab*Pro)
 			SLEEP_STATE=force
 			;;
+		*TAIFAElimuTab*)
+			setprop sleep.earlysuspend 1
+			;;
 		*)
 			;;
 	esac
 
-	set_property sleep.state ${SLEEP_STATE}
+	# Detect if deep sleep is supported and auto set sleep.state parameter
+
+	# Override auto-detected power suspend type
+	# options: (https://www.kernel.org/doc/Documentation/power/interface.txt)
+	# 	'freeze' (Suspend-to-Idle)
+	# 	'standby' (Power-On Suspend)
+	# 	'mem' (Suspend-to-RAM)
+	# 	'disk' (Suspend-to-Disk)
+	mem_sleep_default=$(cat /sys/power/mem_sleep)
+	if [[ "$mem_sleep_default" == *deep* ]]; then
+		setprop sleep.state ${SLEEP_STATE:-mem}
+		current_sleep_state=${SLEEP_STATE:-mem}
+	else
+		setprop sleep.state ${SLEEP_STATE:-freeze}
+		current_sleep_state=${SLEEP_STATE:-freeze}
+		echo "s2idle" > /sys/power/mem_sleep
+	fi
+
+	current_sleep_state=$(getprop sleep.state)
+	if [[ "${current_sleep_state}" = "mem" ]] || [[ "${current_sleep_state}" = "disk" ]]; then
+		echo "deep" > /sys/power/mem_sleep
+	fi
 }
 
 function init_hal_thermal()
@@ -1452,6 +1478,11 @@ for c in `cat /proc/cmdline`; do
 					DPI=*)
 						set_property ro.sf.lcd_density "$DPI"
 						;;
+					PWR_OFF_DBLCLK=*)
+						# set power off double click
+						# options: true,false
+						set_property poweroff.doubleclick "$PWR_OFF_DBLCLK"
+						;;
 					SET_SF_ROTATION=*)
 						set_property ro.sf.hwrotation "$SET_SF_ROTATION"
 						;;
@@ -1504,11 +1535,6 @@ for c in `cat /proc/cmdline`; do
 					# Bass Settings
 					SET_LOGCAT_DEBUG=*)
 						set_property debug.logcat "$SET_LOGCAT_DEBUG"
-						;;
-					SUSPEND_TYPE=*)
-						# set suspend type
-						# options: mem, disk, freeze mem, freeze disk
-						set_property sleep.state "$SUSPEND_TYPE"
 						;;
 					PWR_OFF_DBLCLK=*)
 						# set power off double click
