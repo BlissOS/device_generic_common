@@ -65,7 +65,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
 ifneq ($(BOARD_IS_GO_BUILD),true)
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.lmk.critical_upgrade=true \
-    ro.lmk.use_minfree_levels=true \
     ro.lmk.use_psi=true \
     ro.lmk.use_new_strategy=false
 endif
@@ -318,4 +317,63 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true
 
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
+
+
+ifeq ($(USE_PER_DISPLAY_FOCUS),true)
+
+PRODUCT_PACKAGES += \
+    MultiDisplay
+
+ifeq ($(USE_PER_DISPLAY_FOCUS_ZQY_IME),true)
+
+PRODUCT_PACKAGES += \
+    zqyMultiClientInputMethod
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.debug.multi_client_ime=com.zqy.multidisplayinput/.MultiClientInputMethod \
+    ro.sys.multi_client_ime=com.zqy.multidisplayinput/.MultiClientInputMethod
+else
+
+    nozqyime=true
+
+endif
+
+ifeq ($(USE_PER_DISPLAY_FOCUS_IME),true)
+PRODUCT_PACKAGES += \
+    MultiClientInputMethod
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.debug.multi_client_ime=com.example.android.multiclientinputmethod/.MultiClientInputMethod \
+    ro.sys.multi_client_ime=com.example.android.multiclientinputmethod/.MultiClientInputMethod
+
+else
+
+    nomcime=true
+
+endif
+
+# if nozqyime and nomcime are true, then we have no ime
+ifeq ($(nozqyime),true)
+ifeq ($(nomcime),true)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.boot.bliss.force_ime_on_all_displays=true
+
+endif
+endif
+
+endif
+
+ifeq ($(FORCE_NAVBAR_ON_SECONDARY_DISPLAYS),true)
+    PRODUCT_PROPERTY_OVERRIDES += \
+        ro.boot.force.navbar_on_secondary_displays=1
+
+endif
+
+ifeq ($(FORCE_STATUS_BAR_ON_SECONDARY_DISPLAYS),true)
+    PRODUCT_PROPERTY_OVERRIDES += \
+        ro.boot.force.statusbar_on_secondary_displays=1
+
+endif
+
 
