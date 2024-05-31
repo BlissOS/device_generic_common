@@ -18,7 +18,7 @@ PRODUCT_PACKAGES := \
     modetest \
     vulkan.intel \
     vulkan.intel_hasvk \
-    vulkan.amd \
+    vulkan.radeon \
     vulkan.virtio \
     vulkan.swrast \
     vulkan.nouveau-experimental \
