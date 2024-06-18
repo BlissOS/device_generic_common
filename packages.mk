@@ -148,7 +148,7 @@ PRODUCT_PACKAGES += \
 	device.prop
     
 # Some additional CLI programs
-PRODUCT_PACKAGES += tput dialog alsa-info.sh tree lspci dmidecode evtest
+PRODUCT_PACKAGES += tput dialog alsa-info.sh tree lspci dmidecode evtest efibootmgr
 
 # Surface specific
 ifeq ($(BOARD_IS_SURFACE_BUILD),true)
