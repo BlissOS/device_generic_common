@@ -16,6 +16,9 @@
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
+# No Compressed APEXes
+OVERRIDE_PRODUCT_COMPRESSED_APEX := false
+
 # A/B
 PRODUCT_BUILD_GENERIC_OTA_PACKAGE := true
 AB_OTA_POSTINSTALL_CONFIG += \
