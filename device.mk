@@ -57,7 +57,9 @@ PRODUCT_PROPERTY_OVERRIDES := \
     audio.safemedia.bypass=true \
     persist.device_config.mglru_native.lru_gen_config=all \
     persist.sys.zram_enabled=1 \
-    ro.setupwizard.mode=DISABLED
+    ro.setupwizard.mode=DISABLED \
+    external_storage.casefold.enabled=1 \
+    external_storage.projid.enabled=1
 
 # LMKd
 ifneq ($(BOARD_IS_GO_BUILD),true)
@@ -167,7 +169,7 @@ ifeq ($(BOARD_IS_GO_BUILD),true)
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-go
 endif
 
-# Enforce privapp-permissions whitelist
+# Force sdcardfs to use esdfs instead
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.sys.sdcardfs=false \
     persist.sys.sdcardfs=force_off
