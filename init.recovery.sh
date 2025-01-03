@@ -26,9 +26,10 @@ function init_misc()
 function inir_recovery_device_link()
 {
   # Insert /data to recovery.fstab
-  if grep -E '^\s*[^#].+ /data ' "$(ls /fstab.*)" >> /etc/recovery.fstab; then
-    set_property sys.recovery.data_is_part true
-  fi
+	if _data=$(grep -E '^ */dev/block/.+ /data ' "$(ls /fstab.*)") && ! { set -- $_data && mount "$1" "$2" -t "$3" -o "$4"; }; then
+		echo "$_data" >>/etc/recovery.fstab
+		set_property sys.recovery.data_is_part true
+	fi
 
   # Insert /system into recovery.fstab
   if [ "$(getprop ro.boot.slot_suffix)" ]; then
