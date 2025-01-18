@@ -23,7 +23,7 @@ function init_misc()
     fi
 }
 
-function inir_recovery_device_link()
+function init_recovery_device_link()
 {
   # Insert /data to recovery.fstab
 	if _data=$(grep -E '^ */dev/block/.+ /data ' "$(ls /fstab.*)") && ! { set -- $_data && mount "$1" "$2" -t "$3" -o "$4"; }; then
@@ -52,7 +52,7 @@ function do_netconsole()
 function do_init()
 {
     init_misc
-	inir_recovery_device_link
+	init_recovery_device_link
 }
 
 # import cmdline variables
