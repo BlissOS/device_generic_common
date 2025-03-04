@@ -16,6 +16,9 @@
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
+# Don't ship with dynamic partition
+PRODUCT_USE_DYNAMIC_PARTITIONS := false
+
 # No Compressed APEXes
 OVERRIDE_PRODUCT_COMPRESSED_APEX := false
 
