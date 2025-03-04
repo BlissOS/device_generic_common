@@ -92,6 +92,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.thermal@aidl-service.intel
 
+# Fingerprint
+PRODUCT_PACKAGES += \
+    com.android.hardware.biometrics.fingerprint.virtual
+
 # Bootctrl HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-x86impl \
