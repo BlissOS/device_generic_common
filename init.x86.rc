@@ -104,13 +104,16 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant -dd \
     interface aidl android.hardware.wifi.supplicant.ISupplicant/default
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
+	user root
     disabled
     oneshot
 
 service logcat /system/bin/logcat -b all -v threadtime -f /data/log.txt
+	user root
     class debug
 
 service kmsg_fetch /system/bin/sh /system/etc/init.sh kmsg
+	user root
     class debug
 
 service thermal-daemon /vendor/bin/thermal-daemon --adaptive
@@ -121,27 +124,32 @@ service thermal-daemon /vendor/bin/thermal-daemon --adaptive
 
 service btattach /system/vendor/bin/btattach
     class main
+	user root
     disabled
     oneshot
     seclabel u:r:bluetooth:s0
 
 service wacom-input /system/bin/wacom-input
+	user root
     disabled
     oneshot
     seclabel u:r:inputflinger:s0
 
 service tablet-mode /system/bin/tablet-mode
+	user root
     disabled
     oneshot
     seclabel u:r:inputflinger:s0
 
 service ctrl-alt-del /system/bin/input keyevent --longpress POWER
+	user root
     disabled
     oneshot
     keycodes 97 100 111
     seclabel u:r:init:s0
 
 service iptsd_runner /vendor/bin/iptsd_runner
+	user root
     class main
     disabled
     seclabel u:r:zygote:s0
