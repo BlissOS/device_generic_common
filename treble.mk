@@ -67,10 +67,6 @@ PRODUCT_PACKAGES += \
     power.x86 \
     android.hardware.power-service.example
 
-# RenderScript HAL
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
-
 # Sensors HAL
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl
