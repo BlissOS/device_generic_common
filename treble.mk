@@ -89,7 +89,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal HAL
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@aidl-service.intel
+    com.android.hardware.thermal.intel
 
 # Fingerprint
 PRODUCT_PACKAGES += \
