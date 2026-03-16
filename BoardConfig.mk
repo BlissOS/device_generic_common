@@ -224,9 +224,8 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_COMMON_TREE)/recovery.fstab
 TARGET_RECOVERY_UI_LIB := librecovery_ui_x86
 
 # Init
-TARGET_INIT_VENDOR_LIB ?= //$(LOCAL_COMMON_TREE):init_x86
+$(call soong_config_set,libinit,vendor_init_lib,//$(LOCAL_COMMON_TREE):init_x86)
 TARGET_RECOVERY_DEVICE_MODULES ?= init_x86
 
 # Include GloDroid components
 include device/generic/common/glodroid/BoardConfig_glodroid.mk
-
